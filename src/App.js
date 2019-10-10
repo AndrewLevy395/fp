@@ -637,7 +637,7 @@ socket.on("allSelectedStatus", function(status) {
   }
 });
 
-socket.on("updateRoleState", function(rs) {
+socket.on("updateRoleState", function(rs, isRunning) {
   for (let role in rs) {
     if (rs.hasOwnProperty(role) && rs[role]) {
       console.log("greying role", role);

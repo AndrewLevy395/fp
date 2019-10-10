@@ -46,6 +46,7 @@ let roleState = {
 
 let currentTurn = null;
 let guessesRemaining = 0;
+let gameStarted = false;
 
 function resetVars(){
   clientList = [];
@@ -60,6 +61,7 @@ function resetVars(){
 
   currentTurn = null;
   guessesRemaining = 0;
+  gameStarted = false;
   io.sockets.emit("reset");
 }
 
@@ -82,7 +84,7 @@ function updateAll() {
 }
 
 function sendRoleState() {
-  io.sockets.emit("updateRoleState", roleState);
+  io.sockets.emit("updateRoleState", roleState, gameStarted);
 }
 
 function sendBoardUpdate() {
@@ -258,6 +260,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on("startGame", function() {
+    gameStarted = true;
     sendBoardUpdate();
     socket.broadcast.emit("closeModal");
     clientList.forEach(c => {
